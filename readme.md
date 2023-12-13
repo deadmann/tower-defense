@@ -21,8 +21,8 @@ Tower Defence Basics:
        per collision box
    - **B. way points**
      - O(n), define point along the path
- - *Building placement*
- - Shooting projectiles
+ - **Building placement**
+ - *Shooting projectiles*
  - Health bars
  - Sprites
  - Waves

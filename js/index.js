@@ -7,6 +7,34 @@ canvas.height = 768
 c.fillStyle = 'white'
 c.fillRect(0,0, canvas.width, canvas.height)
 
+const placementTilesData2D = []
+for (let i = 0; i < placementTilesData.length; i+=20) {
+    placementTilesData2D.push(placementTilesData.slice(i, i + 20))
+}
+
+
+
+/**
+ *
+ * @type {PlacementTile[]}
+ */
+const placementTiles = []
+
+placementTilesData2D.forEach((row, y) => {
+    row.forEach((symbol, x) => {
+        if(symbol === 14) {
+            // add building placement tile here
+            placementTiles.push(new PlacementTile({
+                position: {
+                    x: x * 64,
+                    y: y * 64
+                }
+            }))
+        }
+    })
+})
+console.log(placementTiles)
+
 const image = new Image()
 image.onload = () => {
     // ensure draw is called after image load
@@ -14,49 +42,7 @@ image.onload = () => {
 }
 image.src = 'img/game-map.png' // image load perform pretty quick, so c.drawImage, if called after this, draw nothing
 
-class Enemy {
-    constructor({position = {x: 0, y: 0}}) {
-        this.position = {
-            x: position.x,
-            y: position.y
-        }
-        this.width = 100
-        this.height = 100
-        this.waypointIndex = 0
-        this.center = {
-            x: this.position.x + this.width / 2,
-            y: this.position.y + this.height / 2
-        }
-    }
 
-    draw() {
-        c.fillStyle = 'red'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-
-    update() {
-        this.draw()
-
-        const waypoint = waypoints[this.waypointIndex]
-        const yDistance = waypoint.y - this.center.y
-        const xDistance = waypoint.x - this.center.x
-        // yDistance should be used first, that's how the equation work
-        // value get stored as radiance, not degree
-        const angle = Math.atan2(yDistance, xDistance) // Video 1:10 ~ 1:12
-        this.position.x += Math.cos(angle)
-        this.position.y += Math.sin(angle)
-        this.center = {
-            x: this.position.x + this.width / 2,
-            y: this.position.y + this.height / 2
-        }
-
-        if (Math.round(this.center.x) === Math.round(waypoint.x)
-            && Math.round(this.center.y) === Math.round(waypoint.y)
-            && this.waypointIndex < waypoints.length) {
-            this.waypointIndex++
-        }
-    }
-}
 
 const enemies = []
 // first item overlap with second due to center offset calculation, so we start at 1
@@ -72,6 +58,9 @@ for (let i = 1; i<= 10; i++) {
     )
 }
 
+const buildings = []
+let activeTile = undefined
+
 function animate() {
     requestAnimationFrame(animate)
     c.clearRect(0, 0, canvas.width, canvas.height)
@@ -80,4 +69,45 @@ function animate() {
     enemies.forEach(enemy => {
         enemy.update()
     })
+
+    placementTiles.forEach(tile => {
+        tile.update(mouse)
+    })
+
+    buildings.forEach((building) => {
+        building.draw()
+    })
 }
+
+const mouse = {
+    x: undefined,
+    y: undefined
+}
+
+canvas.addEventListener('click', event => {
+    if (activeTile && !activeTile.isOccupied) {
+        buildings.push(new Building({
+            position: {
+                x: activeTile.position.x,
+                y: activeTile.position.y
+            }
+        }))
+        activeTile.isOccupied = true
+    }
+})
+
+window.addEventListener('mousemove', event => {
+    mouse.x = event.clientX
+    mouse.y = event.clientY
+
+    activeTile = null
+    for (const tile of placementTiles) {
+        if (mouse.x > tile.position.x
+            && mouse.x < tile.position.x + tile.size
+            && mouse.y > tile.position.y
+            && mouse.y < tile.position.y + tile.size) {
+            activeTile = tile
+            break
+        }
+    }
+})
