@@ -12,8 +12,8 @@ Map Creation:
  - **Map details**
 
 Tower Defence Basics:
- - *Project setup*
- - Pathfinding
+ - **Project setup**
+ - *Pathfinding*
  - Building placement
  - Shooting projectiles
  - Health bars
