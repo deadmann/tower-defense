@@ -36,11 +36,16 @@ class Enemy {
             x: this.position.x + this.width / 2,
             y: this.position.y + this.height / 2
         }
+        this.radius = 50
     }
 
     draw() {
         c.fillStyle = 'red'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        // c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.beginPath()
+        c.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2)
+        // c.fillStyle = 'red'
+        c.fill()
     }
 
     update() {
@@ -67,24 +72,79 @@ class Enemy {
     }
 }
 
-class Building {
-    constructor({position = {x: 0, y: 0}}) {
+class Projectile {
+    constructor({position = {x:0, y:0}, enemy}) {
         this.position = position
-        this.width = 64
-        this.height = 64
+        this.velocity = {x:0, y:0}
+        this.enemy = enemy
+        this.radius = 10
     }
 
     draw() {
-        c.fillStyle = 'blue'
-        c.fillRect(
-            this.position.x,
-            this.position.y,
-            this.width * 2,
-            this.height
-        )
+        c.beginPath()
+        // angle is in radiance, Math.PI * 2 mean full length of a circle, 360 in degree
+        c.arc(this.position.x, this.position.y, this.radius, 0, Math.PI * 2)
+        c.fillStyle = 'orange'
+        c.fill()
     }
 
     update() {
         this.draw()
+
+        // yDistance should be used first, that's how the equation work
+        // value get stored as radiance, not degree
+        const angle = Math.atan2(
+            this.enemy.center.y - this.position.y,
+            this.enemy.center.x - this.position.x
+        ) // Video 2:22~
+        const power = 5
+        this.velocity.x = Math.cos(angle) * power
+        this.velocity.y = Math.sin(angle) * power
+
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+    }
+}
+
+class Building {
+    constructor({position = {x: 0, y: 0}}) {
+        this.position = position
+        this.width = 64 * 2
+        this.height = 64
+        this.center = {
+            x: position.x + this.width / 2,
+            y: position.y + this.height / 2
+        }
+        this.projectiles = []
+        this.radius = 250
+        this.target = undefined
+        this.frames = 0
+    }
+
+    draw() {
+        c.fillStyle = 'blue'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
+        c.beginPath()
+        c.arc(this.center.x, this.center.y, this.radius, 0, Math.PI * 2)
+        c.fillStyle = 'rgba(0, 0, 255, 0.2)'
+        c.fill()
+    }
+
+    update() {
+        this.draw()
+        if(this.target && this.frames % 100 === 0) {
+            this.projectiles.push(
+                new Projectile({
+                    position: {
+                        x: this.center.x,
+                        y: this.center.y
+                    },
+                    enemy: this.target
+                })
+            )
+        }
+
+        this.frames++
     }
 }

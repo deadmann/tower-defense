@@ -33,7 +33,6 @@ placementTilesData2D.forEach((row, y) => {
         }
     })
 })
-console.log(placementTiles)
 
 const image = new Image()
 image.onload = () => {
@@ -75,7 +74,32 @@ function animate() {
     })
 
     buildings.forEach((building) => {
-        building.draw()
+        building.update()
+        building.target = null
+        const validEnemies = enemies.filter(enemy => {
+            const xDistance = enemy.center.x - building.center.x
+            const yDistance = enemy.center.y - building.center.y
+            const distance = Math.hypot(xDistance, yDistance)
+            return distance < enemy.radius + building.radius
+        })
+
+        building.target = validEnemies[0]
+
+        for (let i = building.projectiles.length - 1; i >= 0; i--) {
+            const projectile = building.projectiles[i]
+
+            projectile.update()
+
+            const xDistance = projectile.enemy.center.x - projectile.position.x
+            const yDistance = projectile.enemy.center.y - projectile.position.y
+            // finds the distance of the longest side of a triangle
+            const distance = Math.hypot(xDistance, yDistance) // Video: 2:29 ~ 2:30
+            if(distance < projectile.enemy.radius + projectile.radius){
+                building.projectiles.splice(i, 1)
+            }
+            console.log(xDistance)
+            console.log(yDistance)
+        }
     })
 }
 

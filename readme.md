@@ -22,8 +22,8 @@ Tower Defence Basics:
    - **B. way points**
      - O(n), define point along the path
  - **Building placement**
- - *Shooting projectiles*
- - Health bars
+ - **Shooting projectiles**
+ - *Health bars*
  - Sprites
  - Waves
  - Game over
