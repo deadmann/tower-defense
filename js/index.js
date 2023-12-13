@@ -9,6 +9,75 @@ c.fillRect(0,0, canvas.width, canvas.height)
 
 const image = new Image()
 image.onload = () => {
-    c.drawImage(image, 0, 0, ) // ensure draw is called after image load
+    // ensure draw is called after image load
+    animate()
 }
 image.src = 'img/game-map.png' // image load perform pretty quick, so c.drawImage, if called after this, draw nothing
+
+class Enemy {
+    constructor({position = {x: 0, y: 0}}) {
+        this.position = {
+            x: position.x,
+            y: position.y
+        }
+        this.width = 100
+        this.height = 100
+        this.waypointIndex = 0
+        this.center = {
+            x: this.position.x + this.width / 2,
+            y: this.position.y + this.height / 2
+        }
+    }
+
+    draw() {
+        c.fillStyle = 'red'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+
+    update() {
+        this.draw()
+
+        const waypoint = waypoints[this.waypointIndex]
+        const yDistance = waypoint.y - this.center.y
+        const xDistance = waypoint.x - this.center.x
+        // yDistance should be used first, that's how the equation work
+        // value get stored as radiance, not degree
+        const angle = Math.atan2(yDistance, xDistance) // Video 1:10 ~ 1:12
+        this.position.x += Math.cos(angle)
+        this.position.y += Math.sin(angle)
+        this.center = {
+            x: this.position.x + this.width / 2,
+            y: this.position.y + this.height / 2
+        }
+
+        if (Math.round(this.center.x) === Math.round(waypoint.x)
+            && Math.round(this.center.y) === Math.round(waypoint.y)
+            && this.waypointIndex < waypoints.length) {
+            this.waypointIndex++
+        }
+    }
+}
+
+const enemies = []
+// first item overlap with second due to center offset calculation, so we start at 1
+for (let i = 1; i<= 10; i++) {
+    const xOffset = i * 150
+    enemies.push(
+        new Enemy({
+            position: {
+                x: waypoints[0].x - xOffset,
+                y: waypoints[0].y
+            }
+        })
+    )
+}
+
+function animate() {
+    requestAnimationFrame(animate)
+    c.clearRect(0, 0, canvas.width, canvas.height)
+
+    c.drawImage(image, 0, 0)
+    enemies.forEach(enemy => {
+        enemy.update()
+    })
+}

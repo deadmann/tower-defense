@@ -13,8 +13,15 @@ Map Creation:
 
 Tower Defence Basics:
  - **Project setup**
- - *Pathfinding*
- - Building placement
+ - **Pathfinding**
+   - A. collision detection
+     - O(n^2), add collision block at the end of each path
+       and tell the creature to move into **determined** 
+       direction, Also need continuous check for collision
+       per collision box
+   - **B. way points**
+     - O(n), define point along the path
+ - *Building placement*
  - Shooting projectiles
  - Health bars
  - Sprites
