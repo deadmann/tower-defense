@@ -23,11 +23,11 @@ Tower Defence Basics:
      - O(n), define point along the path
  - **Building placement**
  - **Shooting projectiles**
- - *Health bars*
- - Sprites
- - Waves
+ - **Health bars**
+ - *Waves*
  - Game over
  - Resources
+ - Sprites
  - Launch
 
 

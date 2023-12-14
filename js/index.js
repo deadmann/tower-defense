@@ -65,9 +65,10 @@ function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height)
 
     c.drawImage(image, 0, 0)
-    enemies.forEach(enemy => {
+    for (let i = enemies.length - 1; i >= 0; i--) {
+        const enemy = enemies[i]
         enemy.update()
-    })
+    }
 
     placementTiles.forEach(tile => {
         tile.update(mouse)
@@ -95,6 +96,15 @@ function animate() {
             // finds the distance of the longest side of a triangle
             const distance = Math.hypot(xDistance, yDistance) // Video: 2:29 ~ 2:30
             if(distance < projectile.enemy.radius + projectile.radius){
+                projectile.enemy.health -= 20
+                if(projectile.enemy.health <= 0){
+                    const enemyIndex = enemies.findIndex(enemy => {
+                        return projectile.enemy === enemy
+                    })
+                    if(enemyIndex > -1) {
+                        enemies.splice(enemyIndex, 1)
+                    }
+                }
                 building.projectiles.splice(i, 1)
             }
             console.log(xDistance)
