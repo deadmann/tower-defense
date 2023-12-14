@@ -44,21 +44,26 @@ image.src = 'img/game-map.png' // image load perform pretty quick, so c.drawImag
 
 
 const enemies = []
-// first item overlap with second due to center offset calculation, so we start at 1
-for (let i = 1; i<= 10; i++) {
-    const xOffset = i * 150
-    enemies.push(
-        new Enemy({
-            position: {
-                x: waypoints[0].x - xOffset,
-                y: waypoints[0].y
-            }
-        })
-    )
+function spawnEnemies(spawnCount) {
+    // first item overlap with second due to center offset calculation, so we start at 1
+    for (let i = 1; i<= spawnCount; i++) {
+        const xOffset = i * 150
+        enemies.push(
+            new Enemy({
+                position: {
+                    x: waypoints[0].x - xOffset,
+                    y: waypoints[0].y
+                }
+            })
+        )
+    }
 }
 
 const buildings = []
 let activeTile = undefined
+let enemyCount = 3
+
+spawnEnemies(enemyCount)
 
 function animate() {
     requestAnimationFrame(animate)
@@ -104,6 +109,12 @@ function animate() {
                     if(enemyIndex > -1) {
                         enemies.splice(enemyIndex, 1)
                     }
+                }
+
+                // tracking total amount of enemies
+                if(enemies.length === 0) {
+                    enemyCount += 2
+                    spawnEnemies(enemyCount)
                 }
                 building.projectiles.splice(i, 1)
             }

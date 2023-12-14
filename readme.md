@@ -24,8 +24,8 @@ Tower Defence Basics:
  - **Building placement**
  - **Shooting projectiles**
  - **Health bars**
- - *Waves*
- - Game over
+ - **Waves**
+ - *Game over*
  - Resources
  - Sprites
  - Launch
