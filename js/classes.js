@@ -70,7 +70,7 @@ class Enemy {
         // value get stored as radiance, not degree
         const angle = Math.atan2(yDistance, xDistance) // Video 1:10 ~ 1:12
 
-        const speed = 10
+        const speed = 3
 
         this.velocity.x = Math.cos(angle) * speed
         this.velocity.y = Math.sin(angle) * speed

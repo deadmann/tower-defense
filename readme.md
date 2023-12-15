@@ -26,8 +26,12 @@ Tower Defence Basics:
  - **Health bars**
  - **Waves**
  - **Game over**
- - *Resources*
- - Sprites
+ - **Resources**
+ - *Sprites*
+   - *Projectile*
+   - Enemy
+   - Building
+   - Explosion
  - Launch
 
 
@@ -42,3 +46,6 @@ Tower Defence Basics:
    - "Tiled": https://www.mapeditor.org/
  - fonts: https://fonts.google.com/
    - "changa one"
+ - icons: 
+   - heart: https://heroicons.com/
+   - coin: https://fontawesome.com/icons/coins?f=classic&s=solid
