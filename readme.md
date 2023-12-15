@@ -25,8 +25,8 @@ Tower Defence Basics:
  - **Shooting projectiles**
  - **Health bars**
  - **Waves**
- - *Game over*
- - Resources
+ - **Game over**
+ - *Resources*
  - Sprites
  - Launch
 
@@ -40,3 +40,5 @@ Tower Defence Basics:
    - "Free Stone Tower Defense Game Art"
  - Map Editing Software:
    - "Tiled": https://www.mapeditor.org/
+ - fonts: https://fonts.google.com/
+   - "changa one"
