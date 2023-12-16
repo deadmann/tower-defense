@@ -27,12 +27,12 @@ Tower Defence Basics:
  - **Waves**
  - **Game over**
  - **Resources**
- - *Sprites*
+ - **Sprites**
    - **Projectile**
    - **Enemy**
    - **Building**
-   - *Explosion*
- - Launch
+   - **Explosion**
+ - *Launch*
 
 
 ## Resources:
