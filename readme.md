@@ -29,8 +29,8 @@ Tower Defence Basics:
  - **Resources**
  - *Sprites*
    - **Projectile**
-   - *Enemy*
-   - Building
+   - **Enemy**
+   - *Building*
    - Explosion
  - Launch
 
@@ -45,7 +45,7 @@ Tower Defence Basics:
  - Map Editing Software:
    - "Tiled": https://www.mapeditor.org/
  - fonts: https://fonts.google.com/
-   - "changa one"
+   - "Changa One"
  - icons: 
    - heart: https://heroicons.com/
    - coin: https://fontawesome.com/icons/coins?f=classic&s=solid
