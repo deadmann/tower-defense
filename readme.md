@@ -28,8 +28,8 @@ Tower Defence Basics:
  - **Game over**
  - **Resources**
  - *Sprites*
-   - *Projectile*
-   - Enemy
+   - **Projectile**
+   - *Enemy*
    - Building
    - Explosion
  - Launch
