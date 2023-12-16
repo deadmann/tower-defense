@@ -32,7 +32,7 @@ Tower Defence Basics:
    - **Enemy**
    - **Building**
    - **Explosion**
- - *Launch*
+ - **Launch**
 
 
 ## Resources:
