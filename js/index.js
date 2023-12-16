@@ -5,13 +5,12 @@ canvas.width = 1280
 canvas.height = 768
 
 c.fillStyle = 'white'
-c.fillRect(0,0, canvas.width, canvas.height)
+c.fillRect(0, 0, canvas.width, canvas.height)
 
 const placementTilesData2D = []
-for (let i = 0; i < placementTilesData.length; i+=20) {
+for (let i = 0; i < placementTilesData.length; i += 20) {
     placementTilesData2D.push(placementTilesData.slice(i, i + 20))
 }
-
 
 
 /**
@@ -22,7 +21,7 @@ const placementTiles = []
 
 placementTilesData2D.forEach((row, y) => {
     row.forEach((symbol, x) => {
-        if(symbol === 14) {
+        if (symbol === 14) {
             // add building placement tile here
             placementTiles.push(new PlacementTile({
                 position: {
@@ -42,11 +41,11 @@ image.onload = () => {
 image.src = 'img/game-map.png' // image load perform pretty quick, so c.drawImage, if called after this, draw nothing
 
 
-
 const enemies = []
+
 function spawnEnemies(spawnCount) {
     // first item overlap with second due to center offset calculation, so we start at 1
-    for (let i = 1; i<= spawnCount; i++) {
+    for (let i = 1; i <= spawnCount; i++) {
         const xOffset = i * 150
         enemies.push(
             new Enemy({
@@ -75,13 +74,13 @@ function animate() {
         const enemy = enemies[i]
         enemy.update()
 
-        if(enemy.position.x > canvas.width) {
-            hearts --
+        if (enemy.position.x > canvas.width) {
+            hearts--
             enemies.splice(i, 1)
             document.querySelector('#hearts').innerHTML = hearts.toString()
 
             console.log(hearts)
-            if(hearts === 0){
+            if (hearts === 0) {
                 console.log('Game Over')
                 cancelAnimationFrame(animationId)
                 document.querySelector('#gameOver').style.display = 'flex'
@@ -90,7 +89,7 @@ function animate() {
     }
 
     // tracking total amount of enemies
-    if(enemies.length === 0) {
+    if (enemies.length === 0) {
         enemyCount += 2
         spawnEnemies(enemyCount)
     }
@@ -120,13 +119,13 @@ function animate() {
             const yDistance = projectile.enemy.center.y - projectile.position.y
             // finds the distance of the longest side of a triangle
             const distance = Math.hypot(xDistance, yDistance) // Video: 2:29 ~ 2:30
-            if(distance < projectile.enemy.radius + projectile.radius){
+            if (distance < projectile.enemy.radius + projectile.radius) {
                 projectile.enemy.health -= 20
-                if(projectile.enemy.health <= 0){
+                if (projectile.enemy.health <= 0) {
                     const enemyIndex = enemies.findIndex(enemy => {
                         return projectile.enemy === enemy
                     })
-                    if(enemyIndex > -1) {
+                    if (enemyIndex > -1) {
                         enemies.splice(enemyIndex, 1)
                         coins += 25
                         document.querySelector('#coins').innerHTML = coins
@@ -158,6 +157,9 @@ canvas.addEventListener('click', event => {
             }
         }))
         activeTile.isOccupied = true
+        buildings.sort((a, b) => {
+            return a.position.y - b.position.y
+        })
     }
 })
 

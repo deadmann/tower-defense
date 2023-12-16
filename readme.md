@@ -30,8 +30,8 @@ Tower Defence Basics:
  - *Sprites*
    - **Projectile**
    - **Enemy**
-   - *Building*
-   - Explosion
+   - **Building**
+   - *Explosion*
  - Launch
 
 
